@@ -1,0 +1,41 @@
+<svg _ngcontent-nma-c460="" width="50" height="159" viewBox="0 0 67 159" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g _ngcontent-nma-c460="" filter="url(#filter1_d)">
+        <path _ngcontent-nma-c460=""
+            d="M28 19.7638C28 19.3128 28.3018 18.9177 28.7369 18.799L37.7369 16.3445C38.373 16.171 39 16.6499 39 17.3093V29H28L28 19.7638Z"
+            fill="#FEE133"></path>
+        <path _ngcontent-nma-c460="" fill-rule="evenodd" clip-rule="evenodd"
+            d="M18.4778 56.7691C16.8709 58.8644 16 61.4311 16 64.0716V141C16 142.105 16.8954 143 18 143H31H36H49C50.1046 143 51 142.105 51 141L51 64.0716C51 61.4311 50.1291 58.8644 48.5222 56.7691L42.6518 49.1143C41.5806 47.7174 41 46.0063 41 44.2459V30.5C41 29.3954 40.1046 28.5 39 28.5H36H31H28C26.8954 28.5 26 29.3954 26 30.5L26 44.2459C26 46.0063 25.4194 47.7174 24.3482 49.1143L18.4778 56.7691Z"
+            fill="#ffffff"></path>
+        <rect _ngcontent-nma-c460="" x="16" y="72" width="35" height="4" fill="#FEE133"></rect>
+    </g>
+    <defs _ngcontent-nma-c460="">
+        <filter _ngcontent-nma-c460="" id="filter1_d" x="0" y="0" width="67" height="156" filterUnits="userSpaceOnUse"
+            color-interpolation-filters="sRGB">
+            <feFlood _ngcontent-nma-c460="" flood-opacity="0" result="BackgroundImageFix"></feFlood>
+            <feColorMatrix _ngcontent-nma-c460="" in="SourceAlpha" type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+            <feOffset _ngcontent-nma-c460=""></feOffset>
+            <feGaussianBlur _ngcontent-nma-c460="" stdDeviation="8">
+            </feGaussianBlur>
+            <feColorMatrix _ngcontent-nma-c460="" type="matrix"
+                values="0 0 0 0 0.25 0 0 0 0 0.25 0 0 0 0 0.25 0 0 0 0.25 0">
+            </feColorMatrix>
+            <feBlend _ngcontent-nma-c460="" mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow">
+            </feBlend>
+            <feBlend _ngcontent-nma-c460="" mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape">
+            </feBlend>
+        </filter>
+        <linearGradient _ngcontent-nma-c460="" id="paint0_linear" x1="9" y1="91" x2="44" y2="91"
+            gradientUnits="userSpaceOnUse">
+            <stop _ngcontent-nma-c460="" stop-color="#E8E8E8"></stop>
+            <stop _ngcontent-nma-c460="" offset="0.505208" stop-color="white"></stop>
+            <stop _ngcontent-nma-c460="" offset="1" stop-color="#E8E8E8"></stop>
+        </linearGradient>
+        <linearGradient _ngcontent-nma-c460="" id="paint1_linear" x1="16" y1="62" x2="38" y2="62"
+            gradientUnits="userSpaceOnUse">
+            <stop _ngcontent-nma-c460=""></stop>
+            <stop _ngcontent-nma-c460="" offset="0.463542" stop-opacity="0"></stop>
+            <stop _ngcontent-nma-c460="" offset="1"></stop>
+        </linearGradient>
+    </defs>
+</svg>

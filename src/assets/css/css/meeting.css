@@ -1,0 +1,862 @@
+body {
+    width: 100%;
+    height: 100%;
+}
+
+#screenContainer {
+    display: none;
+}
+
+.logo {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin-top: 20px;
+    position: absolute;
+    z-index: 1;
+    margin-left: 20px;
+    font-size: 25px;
+}
+
+.modal-body,
+#displayModal .modal-body {
+    height: unset;
+    max-height: 400px;
+}
+
+#previewModal .modal-body {
+    max-height: 400px;
+}
+
+.kick {
+    position: absolute;
+    right: 14px;
+    top: 5px;
+    z-index: 1;
+    height: 45px;
+    background: rgba(0, 0, 0, 0.59);
+    color: #fff;
+    border: 1px solid #333;
+    padding: 8px 12px !important;
+    margin: 0 3px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    z-index: 5;
+}
+
+.kick:hover {
+    background: #333;
+    border: 1px solid #333;
+    transition: all 1s ease;
+    color: #fff;
+}
+
+.meeting-info {
+    color: #fff;
+    position: absolute;
+    z-index: 5;
+    top: 20px;
+    margin-bottom: 5px;
+    font-weight: 700;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: fit-content;
+}
+
+.meeting-options {
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    margin: auto;
+    bottom: 30px;
+    display: none;
+    /* display: block!important; */
+    z-index: 9999;
+    left: 0;
+}
+
+.meeting-options button {
+    border-radius: 50%;
+    /* display: inline-flex!important; */
+}
+
+.meeting-options #leaveDELETE{
+    width: 45px;
+    height: 45px;
+}
+
+#participantListBody .meeting-option i{
+color: #212529!important;
+}
+
+.meeting-options button.meeting-option {
+    background: rgba(0, 0, 0, 0.59);
+    color: #fff;
+    border: 1px solid #333;
+    padding: 8px 12px !important;
+    margin: 0 3px;
+    width: 45px;
+    height: 45px;
+    position: relative;
+}
+
+.meeting-options button.meeting-option:hover,
+.meeting-options button.meeting-option.notify {
+    background: #333;
+    border: 1px solid #333;
+    transition: all 1s ease;
+    color: #fff;
+}
+
+.meeting-option:focus {
+    outline: none;
+    color: #fff;
+    box-shadow: none;
+}
+
+.btn-danger {
+    padding: 9.5px 13.5px !important;
+    margin: 0 3px;
+}
+
+.notify:after,
+.number:after {
+    position: absolute;
+    top: -5px;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    content: attr(data-content);
+    font-weight: bold;
+    line-height: 1.5;
+    font-size: 12px;
+    right: -8px;
+}
+
+#participantListBody {
+    counter-reset: row-num;
+}
+#participantListBody tr {
+    counter-increment: row-num;
+}
+#participantListBody tr th::before {
+    content: counter(row-num);
+}
+
+.meeting-logo {
+    z-index: 5;
+    position: fixed;
+    width: 90px;
+    top: 25px;
+    left: 25px;
+}
+
+.chat-panel {
+    width: 330px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0px 3px 9px rgb(0 0 0 / 10%);
+    position: fixed;
+    z-index: 9;
+    display: none;
+    top: 0;
+    left: 0;
+}
+
+.chat-box {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.chat-header {
+    height: 50px;
+    font-size: 16px;
+    padding: 14px;
+    /* color: #fff; */
+    background: #fff;
+    border-bottom: 1px solid #dee2e6;
+    font-weight: 700;
+}
+
+.chat-footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    padding: 7px 10px 10px;
+    background: #fff;
+    border-top: 1px solid #dee2e6;
+}
+
+.chat-footer .input-group input::placeholder {
+    color: #666;
+}
+
+.chat-footer .input-group {
+    margin-top: 5px;
+    /* background: #1e303f; */
+    /* background: #333; */
+    background: #fafafa;
+    border: 1px solid #dee2e6;
+    border-radius: 10px;
+}
+
+.chat-footer .input-group .note-input {
+    border: 0;
+    background: transparent;
+    color: #000;
+    border-radius: 0;
+}
+
+.chat-footer .input-group .note-input.form-control:focus {
+    outline: none;
+    border-color: #ff6600 !important;
+    box-shadow: none;
+    transition: all 0.1s ease;
+}
+
+.chat-footer .input-group-append {
+    padding-inline-end: 10px;
+}
+.chat-footer .input-group-append button {
+    border: 0;
+    background: transparent;
+    border-radius: 0;
+    color: #333!important;
+    padding: 5px;
+}
+.chat-footer .input-group-append button i{
+    color: inherit;
+    font-size: 16px;
+}
+
+.close-panel {
+    position: absolute;
+    right: 15px;
+    color: #333;
+    top: 16px;
+    cursor: pointer;
+}
+
+.chat-body {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 95px);
+    padding: 15px 0;
+    overflow-y: auto;
+}
+
+.chat-icon {
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    color: #666;
+}
+
+:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.remote-chat-name,
+.remote-chat {
+    position: relative;
+    padding: 5px 15px;
+    clear: both;
+    width: 80%;
+}
+
+.remote-chat-name{
+    font-size: 12px;
+    padding: 2px 15px;
+}
+.remote-chat div {
+    background: #f9f9f9;
+    color: #333;
+    padding: 8px 10px;
+    border-radius: 5px;
+    width: fit-content;
+    word-break: break-word;
+}
+
+.local-chat {
+    position: relative;
+    float: right;
+    width: 80%;
+    text-align: right;
+    padding: 5px 15px;
+}
+
+.local-chat div {
+    background: var(--primary-color);
+    padding: 8px 10px;
+    color: #fff;
+    border-radius: 5px;
+    width: fit-content;
+    float: right;
+    text-align: left;
+    word-break: break-word;
+}
+
+.local-chat:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 0px solid transparent;
+    border-left: 20px solid var(--primary-color);
+    border-bottom: 20px solid transparent;
+    right: 5px;
+    top: 5px;
+}
+
+.local-chat a {
+    color: unset !important;
+}
+
+.remote-chat:after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    width: 0;
+    height: 0;
+    border-top: 0px solid transparent;
+    border-right: 20px solid #f9f9f9;
+    border-bottom: 20px solid transparent;
+    top: 5px;
+    z-index: -1;
+}
+
+.local-chat .btn-primary {
+    color: #fff;
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    word-break: break-word;
+}
+
+.remote-chat .btn-primary {
+    color: #000;
+    background-color: #fff !important;
+    border-color: #fff !important;
+    word-break: break-word;
+}
+
+.modal-footer .btn-primary {
+    color: #fff !important;
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    font-weight: 600;
+}
+
+.modal-footer .btn-primary:hover {
+    color: #fff !important;
+}
+
+.modal-footer .btn-secondary {
+    color: #fff !important;
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    font-weight: 600;
+}
+
+.modal-footer .btn-secondary:hover {
+    color: #fff !important;
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}
+
+.btn-primary:active {
+    color: #fff !important;
+}
+
+#previewFilename,
+#displayFilename {
+    word-break: break-word;
+    margin: 5px 0 0;
+}
+
+.remote-chat .btn-primary:hover {
+    color: #000;
+}
+
+.fileMessage {
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.local-chat .fileMessage:focus {
+    color: #fff !important;
+}
+
+.remote-chat .fileMessage:focus {
+    color: #000 !important;
+}
+
+#screenShare,
+.meeting-options {
+    display: none;
+}
+
+.meeting-section {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: none;
+    top: 0;
+    background-color: #222;
+}
+
+.logo img {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 50px;
+    width: 250px;
+    z-index: 1;
+}
+
+.main p {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: justify;
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.input-group input,
+.input-group input:focus,
+.input-group input:active,
+.input-group input:hover {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    border-radius: 0 !important;
+}
+
+.input-group .btn {
+    border: 0;
+    border-bottom: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    border-radius: 0 !important;
+}
+
+.custom-checkbox input {
+    padding: 0;
+    height: initial;
+    width: initial;
+    margin-bottom: 0;
+    display: none;
+    cursor: pointer;
+}
+
+.main {
+    width: 80%;
+    text-align: center;
+    margin: auto;
+    margin-top: 15px;
+}
+
+.custom-control {
+    padding-left: 0 !important;
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.fa-paper-plane,
+.fa-paperclip {
+    color: #fff;
+}
+
+#previewImage,
+#displayImage {
+    max-height: 300px;
+    max-width: 300px;
+}
+
+.modal-body {
+    text-align: center;
+    background: #fff !important;
+    color: #2a2a2a;
+    min-height: unset;
+    max-height: unset;
+}
+
+.modal-footer {
+    background: #fff !important;
+    border-top: 1px solid #d8d8d8;
+}
+
+.modal-content {
+    background: transparent !important;
+}
+
+.modal-header {
+    color: #fff !important;
+    background: var(--primary-color) !important;
+}
+
+button.close,
+button.close:hover {
+    color: #fff !important;
+    opacity: 1 !important;
+}
+
+#videos {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+/* #videos >div{
+    width: 300px!important;
+    height: 200px!important;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #333;
+} */
+
+#whiteboardSection {
+    width: 0%;
+    position: fixed;
+}
+
+#whiteboardSection,
+app-whiteboard{
+  direction: ltr!important;
+}
+.set-videos {
+    width: 25% !important;
+}
+
+.set-whiteboard {
+    height: 100%;
+    width: 75% !important;
+    left: 25%;
+}
+@media screen and (min-width:700px) {
+    [dir="rtl"] .set-whiteboard {
+        left: auto;
+        right: 25%;
+    }
+}
+
+#videos>* {
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+video {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: block;
+    z-index: 2;
+}
+
+.local-user-name,
+.remote-user-name {
+    /* left: 10px;
+    bottom: 5px; */
+    position: absolute;
+    font-weight: 600;
+    color: #fff;
+    background-color: rgba(255,255,255,0.2);
+    padding: 4px 8px;
+    z-index: 3;
+    border-radius: 2px;
+    left: 50%;
+    top: 70%;
+    transform: translate(-50%, -50%);
+}
+
+.remote-chat-name {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+#fullscreen {
+    position: absolute;
+    left: 50%;
+    top: 30%;
+}
+
+.meetDesc {
+    max-height: 240px;
+    overflow: auto;
+}
+
+.meeting-details video {
+    background: #333;
+    border-radius: 0.25rem;
+    width: 100%;
+    position: relative;
+    height: 400px;
+    z-index: 3;
+}
+
+.meeting-details {
+    padding: 60px 0px;
+    /* position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); */
+}
+.meeting-details .text_error{
+    color: #ff0000;
+    background: rgba(255,0,0,0.1);
+    padding: 10px 15px;
+    border-radius: 10px;
+}
+.meeting-details .card{
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 1px 2px 20px rgb(0 0 0 / 10%);
+    padding: 20px;
+}
+
+.meeting-details .card .card-header{
+    margin: 0px;
+    padding: 0px;
+}
+.meeting-details .card .card-header h5{
+    color: #160637;
+    font-size: 20px;
+    border-inline-start: 4px solid #ff6600;
+    padding-inline-start: 5px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.meeting-details .card .card-body .info_item{
+padding-top: 5px;
+padding-bottom: 5px;
+}
+.meeting-details .card .card-body .info_item h6{
+margin-bottom: 0px;
+}
+.meeting-details .card .card-body .info_item i{
+color: #ff6600;
+margin-inline-end: 5px;
+}
+.meeting-details .card .card-body .message{
+margin: 0px;
+margin-top: 15px;
+}
+.meeting-details .card .card-body .message h2{
+    color: #160637;
+font-size: 1.2rem;
+font-weight: 600;
+margin: 0px;
+margin-bottom: 10px;
+}
+.meeting-details .card .card-body .message p{
+font-size: 1rem;
+margin: 0px;
+}
+.meeting-details .card .card-body .btns button{
+margin-inline-end: 15px;
+}
+.meeting-details .card .card-body .btns button i{
+color: #fff;
+margin: 0px 5px;
+}
+
+.meeting-details .video-Section {
+    position: relative;
+}
+
+.cameraText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    color: #fff;
+    z-index: 3;
+}
+
+.video-controls {
+    position: absolute;
+    bottom: 15px;
+    text-align: center;
+    width: 100%;
+    z-index: 5;
+}
+
+.video-controls ul {
+    display: flex;
+    padding: 0;
+    gap: 10px;
+    align-items: center;
+    list-style: none;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 0;
+    justify-content: center;
+}
+
+.video-controls ul li {
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 38px;
+    cursor: pointer;
+}
+
+.video-controls ul li.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.text-show {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.user-initial {
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    color: #fff;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    border-radius: 50%;
+    line-height: 150px;
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+#error {
+    display: none;
+    color: red;
+}
+
+/*media queries*/
+
+@media only screen and (max-width: 1199px) {
+    .main {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .dashboard-section {
+        position: relative;
+        padding: 15px;
+    }
+    .meeting-details {
+        height: 100%;
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+    }
+    .main {
+        margin-bottom: 30px;
+    }
+    .chat-panel {
+        width: 100%;
+    }
+    #previewImage,
+    #displayImage {
+        max-width: 100%;
+    }
+    .set-videos {
+        width: 100% !important;
+        height: 40% !important;
+    }
+    .set-whiteboard {
+        height: 60%;
+        width: 100% !important;
+        left: 0%;
+        top: 40%;
+    }
+}
+
+[dir="rtl"] .toast-top-right .approve.btn-sm {
+    margin-left: 10px;
+}
+
+[dir="rtl"] .chat-panel {
+    left: auto;
+    right: 0;
+}
+
+[dir="ltr"] .remote-chat-name,
+[dir="rtl"] .remote-chat-name,
+[dir="rtl"] .remote-chat,
+[dir="rtl"] .remote-chat div {
+    margin-right: auto;
+    direction: ltr;
+}
+
+[dir="rtl"] .local-chat div {
+    direction: ltr;
+}
+
+[dir="rtl"] .form-check .form-check-label:before {
+    left: auto;
+    right: 90px;
+}
+
+#shortcutInfo {
+    text-align: start;
+}
+#shortcutInfo .modal-body{
+margin-bottom: 0px;
+padding: 20px 20px;
+}
+#shortcutInfo .modal-body .table{
+margin-bottom: 0px;
+outline: 1px solid #ddd;
+border-radius: 5px;
+}
+#shortcutInfo .modal-body .table tr td,
+#shortcutInfo .modal-body .table tr th:first-child{
+text-align: start;
+}
+
+#shortcutInfo .modal-body .table tr{
+padding: 10px 0;
+border-bottom: 1px solid #ddd;
+}
+#shortcutInfo .modal-body .table tr:last-child{
+    border: 0px;
+}
+
+#shortcutInfo .modal-body thead tr{
+border-bottom: 1px solid #ddd!important;
+}
+
+.modal-footer button{
+    border: 0px;
+}
+#shortcutInfo .table td,#shortcutInfo .table th {
+    padding: 0.75rem 1rem;
+}
+
+.videos_items{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}

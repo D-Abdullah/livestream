@@ -1,0 +1,102 @@
+@import "../../../assets/css/css/widget.min.css";
+
+section {
+  padding: 0px;
+}
+html {
+  direction: ltr;
+}
+
+#whiteboardSection app-header,
+.whiteboardOpen app-header {
+  display: none !important;
+}
+#whiteboardSection app-footer,
+.whiteboardOpen app-footer {
+  display: none !important;
+}
+
+.set-whiteboard .navbar {
+  display: none !important;
+}
+
+#tool-box {
+  bottom: 20px;
+  top: auto;
+  right: 50%;
+  display: grid;
+  border: 2px solid #eee;
+  width: fit-content;
+  grid-template-rows: 44px 44px;
+  grid-template-columns: repeat(12, auto);
+  border-radius: 5px;
+  height: min-content !important;
+  background: #fff;
+  box-shadow: 0px 2px 8px rgb(0 0 0 / 10%);
+  position: fixed;
+  transform: translate(50%, 0%);
+  border-radius: 10px;
+  padding: 5px;
+  row-gap: 5px;
+  max-width: 94vw;
+  overflow-x: auto;
+  canvas {
+    height: 44px;
+    margin: 0px;
+    border: 0px;
+    padding: 5px;
+    border-radius: 8px;
+  }
+}
+
+// .design-surface{
+//   width: calc(100% - 110px);
+//   margin-inline-start: auto;
+// }
+.text-customization {
+  background-color: hsl(0deg 0% 95%);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-flow: row nowrap;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  padding: 10px;
+  span.pipeLine {
+    width: 1px;
+    background-color: rgba(0, 0, 0, 0.63);
+  }
+  select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    border: none;
+    background-image: none;
+    background-color: hsl(0deg 0% 0% / 0%);
+    outline: 0;
+    box-shadow: none;
+    cursor: pointer;
+    text-align: center;
+    margin: 0 5px;
+    position: relative;
+    &::-ms-expand {
+      display: none;
+    }
+
+    option {
+      background-color: #f2f2f2;
+      box-shadow: none !important;
+      border: 0 !important;
+      display: block;
+      padding: 5px 2px;
+      &:hover {
+        background-color: #0f0;
+      }
+    }
+  }
+}

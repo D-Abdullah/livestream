@@ -1,0 +1,47 @@
+
+
+<svg _ngcontent-nma-c460="" width="50" height="156"
+                viewBox="0 0 54 156" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g _ngcontent-nma-c460="" filter="url(#filter0_d)">
+                    <path _ngcontent-nma-c460=""
+                        d="M25 18C25 16.8954 25.8954 16 27 16C28.1046 16 29 16.8954 29 18L29 24L25 24L25 18Z"
+                        fill="#0082f5" style="">
+                    </path>
+                    <path _ngcontent-nma-c460=""
+                        d="M16 44.3265C16 44.0841 16.044 43.8438 16.13 43.6173L21 30.7758L23.516 24.2546C23.8087 23.496 24.5315 22.9901 25.3445 22.9748L28.5933 22.914C29.4372 22.8982 30.2001 23.4139 30.5001 24.2027L33 30.7758L37.87 43.6173C37.956 43.8438 38 44.0841 38 44.3265L38 138C38 139.104 37.1046 140 36 140L18 140C16.8954 140 16 139.104 16 138L16 44.3265Z"
+                        fill="#ffffff"></path>
+                    <rect _ngcontent-nma-c460="" x="16" y="53" width="22" height="4" fill="#0082f5"></rect>
+                </g>
+                <defs _ngcontent-nma-c460="">
+                    <filter _ngcontent-nma-c460="" id="filter0_d" x="0" y="0" width="54" height="156"
+                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood _ngcontent-nma-c460="" flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                        <feColorMatrix _ngcontent-nma-c460="" in="SourceAlpha" type="matrix"
+                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+                        <feOffset _ngcontent-nma-c460=""></feOffset>
+                        <feGaussianBlur _ngcontent-nma-c460="" stdDeviation="8">
+                        </feGaussianBlur>
+                        <feColorMatrix _ngcontent-nma-c460="" type="matrix"
+                            values="0 0 0 0 0.25 0 0 0 0 0.25 0 0 0 0 0.25 0 0 0 0.25 0">
+                        </feColorMatrix>
+                        <feBlend _ngcontent-nma-c460="" mode="normal" in2="BackgroundImageFix"
+                            result="effect1_dropShadow">
+                        </feBlend>
+                        <feBlend _ngcontent-nma-c460="" mode="normal" in="SourceGraphic" in2="effect1_dropShadow"
+                            result="shape"></feBlend>
+                    </filter>
+                    <linearGradient _ngcontent-nma-c460="" id="paint0_linear" x1="9" y1="91" x2="44" y2="91"
+                        gradientUnits="userSpaceOnUse">
+                        <stop _ngcontent-nma-c460="" stop-color="#E8E8E8"></stop>
+                        <stop _ngcontent-nma-c460="" offset="0.505208" stop-color="white"></stop>
+                        <stop _ngcontent-nma-c460="" offset="1" stop-color="#E8E8E8"></stop>
+                    </linearGradient>
+                    <linearGradient _ngcontent-nma-c460="" id="paint1_linear" x1="16" y1="62" x2="38" y2="62"
+                        gradientUnits="userSpaceOnUse">
+                        <stop _ngcontent-nma-c460=""></stop>
+                        <stop _ngcontent-nma-c460="" offset="0.463542" stop-opacity="0"></stop>
+                        <stop _ngcontent-nma-c460="" offset="1"></stop>
+                    </linearGradient>
+                </defs>
+</svg>
+

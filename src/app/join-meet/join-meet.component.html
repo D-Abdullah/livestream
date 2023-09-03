@@ -1,0 +1,686 @@
+<div
+  class="overlay-loader-screen"
+  [style.display]="stopLoader ? 'none' : 'flex'">
+  <div class="d-flex justify-content-center loader_img">
+    <img class="spinner" src="assets/img/loader2.svg" alt="loader" />
+    <img class="logo" src="assets/img/loader_logo.webp" alt="Testat Logo" />
+  </div>
+</div>
+
+<section class="content_section">
+  <div class="container">
+    <div class="row">
+      <div class="no_content m-auto" *ngIf="noMeetIdFlag">
+        <h4>{{ "There_is_no_content" | translate }}</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="pt-4 mb-5 mb-md-0" *ngIf="!noMeetIdFlag && MeetDetailFlage">
+  <div class="container meeting-details">
+    <canvas id="audioOnly" hidden=""></canvas>
+    <div class="row h-100 justify-content-center">
+      <div class="col-lg-6 video-detail">
+        <div class="video-Section">
+          <video
+            id="previewVideo"
+            autoplay=""
+            playsinline=""
+            style="z-index: 0"></video>
+          <div class="cameraText">{{ "Camera_off" | translate }}</div>
+          <div class="video-controls">
+            <ul>
+              <li
+                id="toggleAudioPreview"
+                class=""
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Toggle audio">
+                <i class="fa fa-microphone-slash"></i>
+              </li>
+              <li
+                id="toggleVideoPreview"
+                class=""
+                data-toggle="tooltip"
+                data-placement="top"
+                title="Toggle video">
+                <i class="fa fa-video-slash"></i>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="text-show mt-2 text_error"
+          style="display: none; color: red"></div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card mb-0">
+          <div class="card-header">
+            <h5>Testat Meeting</h5>
+          </div>
+          <div class="card-body">
+            <!-- <div class="ribbon-wrapper ribbon-lg">
+              <div class="ribbon " style="background-color:#ff6600!important;color:#fff;" title="Time Limit">
+                480 Minutes
+              </div>
+            </div> -->
+            <!-- <form id="passwordCheck"> -->
+            <div class="info_item">
+              <h6 *ngIf="MeetDetail.title">
+                <i class="fa fa-id-badge"></i> {{ MeetDetail.title }}
+              </h6>
+            </div>
+            <div
+              *ngIf="
+                MeetDetail.scheduled_date && MeetDetail.scheduled_date != 'null'
+              "
+              class="info_item">
+              <h6>
+                <i class="fa fa-calendar"></i>
+                {{ MeetDetail.scheduled_date | date : "dd/MM/YYYY" }}
+              </h6>
+            </div>
+            <div
+              *ngIf="
+                MeetDetail.scheduled_date && MeetDetail.scheduled_date != 'null'
+              "
+              class="info_item">
+              <h6>
+                <i class="fa fa-clock"></i>
+
+                {{ MeetDetail.scheduled_date | date : "h:mm a" }}
+              </h6>
+            </div>
+            <!-- <div class="info_item">
+              <h6><i class="fa fa-globe"></i></h6>
+            </div> -->
+            <!-- <div class="info_item">
+              <p class="meetDesc">-</p>
+            </div> -->
+
+            <div class="info_item row" hidden="">
+              <div class="col-12 col-md-10 offset-md-1">
+                <input
+                  type="text"
+                  id="username"
+                  class="form-control"
+                  value="admin (Moderator)"
+                  placeholder="Enter your name"
+                  maxlength="8" />
+              </div>
+            </div>
+
+            <div class="info_item mb-0">
+              <ng-container
+                *ngIf="
+                  MeetDetail.is_paid == '1' &&
+                  MeetDetail.price > 0 &&
+                  !MeetDetail.owner
+                ">
+                <div class="message">
+                  <h2>{{ "meeting_paid" | translate }}</h2>
+                  <p>
+                    {{ "enter_meeting_after_completing_payment" | translate }}
+                  </p>
+                  <p class="price">
+                    {{ "cost_participating_meeting" | translate }}
+                    {{ MeetDetail.price }}
+                    {{ "pound" | translate }}
+                  </p>
+                </div>
+                <div class="btns d-flex align-items-center mt-4">
+                  <button
+                    class="default-btn"
+                    (click)="meetingPay(payMethod, MeetDetail.id)">
+                    <i class="fas fa-money-bill"></i>
+                    <span class="label"> {{ "go_to_pay" | translate }} </span>
+                  </button>
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  (MeetDetail.is_paid == '0' && MeetDetail.price <= 0) ||
+                  MeetDetail.owner
+                ">
+                <div class="message">
+                  <h2>{{ "ready_join_meeting" | translate }}</h2>
+                  <p>{{ "enter_study_meeting" | translate }}</p>
+                </div>
+                <div class="btns d-flex align-items-center mt-4">
+                  <button
+                    class="btn default-btn"
+                    id="joinMeeting"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="Join Meeting">
+                    <span class="label"
+                      >{{ "Enter_meeting" | translate }}
+                    </span>
+                    <i class="fas fa-sign-in-alt"></i>
+                  </button>
+                  <button
+                    class="btn default-btn"
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#shortcutInfo"
+                    data-placement="top"
+                    title="Shortcut Keys information">
+                    <i class="fa fa-info"></i>
+                  </button>
+                </div>
+              </ng-container>
+              <span id="error" style="display: none">
+                {{ "Could_not_connect_server" | translate }}
+              </span>
+            </div>
+            <!-- </form> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- inner meet section -->
+  <div class="container-fluid meeting-section">
+    <div class="row">
+      <div id="videos">
+        <div class="videoContainer ot-layout">
+          <img
+            src="https://testat-app.com/assets/img/logo.png"
+            class="meeting-logo"
+            alt="it-plus" />
+          <audio id="localAudio" autoplay="" muted=""></audio>
+          <video id="localVideo" autoplay="" playsinline=""></video>
+          <span class="local-user-name">{{ "You" | translate }}</span>
+          <p class="user-initial"></p>
+        </div>
+        <div id="screenContainer" class="videoContainer">
+          <audio id="localScreenAudio" autoplay="" muted=""></audio>
+          <video id="localScreenVideo" autoplay="" playsinline=""></video>
+          <span class="local-user-name">{{ "Your_screen" | translate }}</span>
+        </div>
+      </div>
+      <div id="whiteboardSection"></div>
+    </div>
+
+    <div class="meeting-info text-center">
+      <span id="meetingIdInfo" class="text-center"></span>
+      <br />
+      <span id="timer" class="text-center"></span>
+    </div>
+
+    <div class="chat-panel">
+      <div class="chat-box">
+        <div class="chat-header">
+          <i class="fas fa-comments"></i>
+          {{ "Chat" | translate }}
+          <i class="fas fa-times close-panel"></i>
+        </div>
+        <div class="chat-body">
+          <div class="empty-chat-body">
+            <i class="fa fa-comments chat-icon"></i>
+          </div>
+        </div>
+        <div class="chat-footer">
+          <form id="chatForm">
+            <div class="input-group">
+              <input
+                type="text"
+                id="messageInput"
+                class="form-control note-input"
+                placeholder="Type a message..."
+                autocomplete="off"
+                maxlength="250" />
+              <div class="input-group-append">
+                <button
+                  id="sendMessage"
+                  class="btn btn-outline-secondary"
+                  type="submit"
+                  title="Send">
+                  <i class="far fa-paper-plane"></i>
+                </button>
+                <button
+                  id="selectFile"
+                  class="btn btn-outline-secondary"
+                  title="Attach File"
+                  type="button">
+                  <i class="fas fa-paperclip"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          <input type="file" name="file" id="file" data-max="50" hidden="" />
+        </div>
+      </div>
+    </div>
+
+    <div class="meeting-options">
+      <button class="btn meeting-option" title="Chat" id="openChat">
+        <i class="far fa-comment-alt"></i>
+      </button>
+      <!--<button
+        class="btn meeting-option"
+        title="Participants"
+        data-toggle="modal"
+        data-target="#participantList"
+        id="showParticipantList">
+        <i class="fas fa-users"></i>
+      </button>-->
+      <button
+        class="btn meeting-option"
+        title="Participants"
+        id="showParticipantList">
+        <i class="fas fa-users"></i>
+      </button>
+      <button class="btn meeting-option" title="Whiteboard" id="whiteboard">
+        <i class="fa fa-chalkboard"></i>
+      </button>
+      <button class="btn meeting-option" title="Mute/Unmute Mic" id="toggleMic">
+        <i class="fa fa-microphone-slash"></i>
+      </button>
+      <button
+        class="btn btn-danger"
+        title="Leave Meeting"
+        id="leaveDELETE"
+        onclick="window.location.reload()">
+        <i class="fas fa-phone"></i>
+      </button>
+      <button class="btn meeting-option" title="On/Off Camera" id="toggleVideo">
+        <i class="fa fa-video-slash"></i>
+      </button>
+      <button
+        class="btn meeting-option"
+        title="Start/Stop ScreenShare"
+        id="screenShare">
+        <i class="fa fa-desktop"></i>
+      </button>
+
+      <button
+        class="btn meeting-option"
+        title="Raise Hand"
+        id="raiseHand"
+        *ngIf="!MeetDetail.owner">
+        <i class="fa fa-hand-paper"></i>
+      </button>
+
+      <button
+        class="btn meeting-option"
+        title="Start/Stop Recording"
+        id="recording">
+        <i class="fa fa-record-vinyl"></i>
+      </button>
+      <button class="btn meeting-option openSettings" title="Open Settings">
+        <i class="fa fa-cog"></i>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="previewModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="previewModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="previewModalLabel">
+            {{ "File_Preview" | translate }}
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <img id="previewImage" src="" />
+          <p id="previewFilename"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            {{ "Cancel" | translate }}
+          </button>
+          <button type="button" id="sendFile" class="btn btn-primary">
+            {{ "Send" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="displayModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="displayModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="displayModalLabel">
+            {{ "File_Display" | translate }}
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img id="displayImage" src="" />
+          <p id="displayFilename"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            {{ "Close" | translate }}
+          </button>
+          <button type="button" id="downloadFile" class="btn btn-primary">
+            {{ "Download" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="settings"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="settingsLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="settingsLabel">
+            {{ "Settings" | translate }}
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <div class="col-lg-3 col-md-4">
+              <label for="videoQualitySelect">{{
+                "Video_quality" | translate
+              }}</label>
+            </div>
+            <div class="col-lg-9 col-md-8">
+              <select id="videoQualitySelect" class="form-control">
+                <option
+                  id="QVGA"
+                  value="QVGA"
+                  data-width="320"
+                  data-height="240">
+                  QVGA
+                </option>
+                <option id="VGA" value="VGA" data-width="640" data-height="480">
+                  VGA
+                </option>
+                <option id="HD" value="HD" data-width="1280" data-height="720">
+                  HD
+                </option>
+                <option
+                  id="FHD"
+                  value="FHD"
+                  data-width="1920"
+                  data-height="1080">
+                  FHD
+                </option>
+                <option id="4K" value="4K" data-width="3840" data-height="2160">
+                  4K
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-3 col-md-4">
+              <label for="audioSource"
+                >{{ "Audio_input_source" | translate }}
+              </label>
+            </div>
+            <div class="col-lg-9 col-md-8">
+              <select id="audioSource" class="form-control"></select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-lg-3 col-md-4">
+              <label for="videoSource">{{ "Video_source" | translate }} </label>
+            </div>
+            <div class="col-lg-9 col-md-8">
+              <select id="videoSource" class="form-control"></select>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <div class="col-lg-3 col-md-4">
+              <label for="videoSource"
+                >{{ "Recording_preference" | translate }}
+              </label>
+            </div>
+            <div class="col-lg-9 col-md-8">
+              <select id="recordingPreference" class="form-control">
+                <option value="with">
+                  {{ "With_whiteboard" | translate }}
+                </option>
+                <option value="without">
+                  {{ "Without_whiteboard" | translate }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            {{ "Close" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="shortcutInfo"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="shortcutInfoLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="shortcutInfoLabel">
+            {{ "Settings" | translate }}
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-borderless">
+            <thead>
+              <tr>
+                <th scope="col">{{ "Action" | translate }}</th>
+                <th scope="col">{{ "Shortcut_Key" | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{ "Chat" | translate }}</td>
+                <th scope="row"><kbd>C</kbd></th>
+              </tr>
+              <tr>
+                <td>{{ "Attach_File" | translate }}</td>
+                <th scope="row"><kbd>F</kbd></th>
+              </tr>
+              <tr>
+                <td>{{ "Mute/Unmute_Audio" | translate }}</td>
+                <th scope="row"><kbd>A</kbd></th>
+              </tr>
+              <tr>
+                <td>{{ "Leave_Meeting" | translate }}</td>
+                <th scope="row"><kbd>L</kbd></th>
+              </tr>
+              <tr>
+                <td>{{ "On/Off_Video" | translate }}</td>
+                <th scope="row"><kbd>V</kbd></th>
+              </tr>
+              <tr>
+                <td>{{ "Screen_Share" | translate }}</td>
+                <th scope="row"><kbd>S</kbd></th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            {{ "Close" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="participantList" class="side-panel-layout">
+    <div class="participantListSide participant-panel" role="document">
+      <div class="participant-box">
+        <div class="participant-header">
+          <h5 id="participantListLabel">
+            {{ "Participants" | translate }}
+          </h5>
+          <button
+            type="button"
+            class="close"
+            id="closeparticipantList"
+            aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="participant-body">
+          <table class="table table-borderless">
+            <tbody id="participantListBody">
+              <tr>
+                <th scope="row"></th>
+                <td>
+                  <img
+                    [src]="localImgUrl"
+                    alt=""
+                    style="border-radius: 50%"
+                    width="30"
+                    height="30" />
+                </td>
+                <td>انت</td>
+                <td>
+                  <!-- <button
+                    class="btn meeting-option mx-2"
+                    title="Mute/Unmute Mic"
+                    id="toggleMic">
+                    <i class="fa fa-microphone-slash"></i>
+                  </button>
+                  <button
+                    class="btn meeting-option mx-2"
+                    title="On/Off Camera"
+                    id="toggleVideo">
+                    <i class="fa fa-video-slash"></i>
+                  </button> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="participant-footer">
+          <input type="hidden" #url [value]="fullUrl" />
+          <button
+            type="button"
+            id="add"
+            (click)="copyUrl()"
+            class="btn btn-primary">
+            {{ "Invite" | translate }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<ng-template #payMethod let-modal class="custom_modal">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ "payment_method" | translate }}</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="methods">
+      <!-- <div class="pay_method">
+        <input type="radio" id="html" name="payMethod" value="1" />
+        <div class="item_inner">
+          <div class="d-flex align-items-center">
+            <div class="image">
+              <img [src]="'assets/img/visa.png'" />
+            </div>
+            <div class="content">
+              <h2>الدفع بالفيزا</h2>
+              <p>يمكنك الدفع عن طريق الفيزا</p>
+            </div>
+          </div>
+          <i class="selected fa fa-check"></i>
+        </div>
+      </div>
+      <div class="pay_method">
+        <input type="radio" id="html" name="payMethod" value="2" />
+        <div class="item_inner">
+          <div class="d-flex align-items-center">
+            <div class="image">
+              <img [src]="'assets/img/vodafone.png'" />
+            </div>
+            <div class="content">
+              <h2>فودافون كاش</h2>
+              <p>يمكنك الدفع عن طريق فودافون كاش</p>
+            </div>
+          </div>
+          <i class="selected fa fa-check"></i>
+        </div>
+      </div> -->
+      <div class="pay_method">
+        <input type="radio" checked id="html" name="payMethod" value="3" />
+        <div class="item_inner">
+          <div class="d-flex align-items-center">
+            <div class="image">
+              <img [src]="'assets/img/fawry.png'" />
+            </div>
+            <div class="content">
+              <h2>{{ "Fawry_Payments" | translate }}</h2>
+              <p>{{ "can_pay_Fawry" | translate }}</p>
+            </div>
+          </div>
+          <i class="selected fa fa-check"></i>
+        </div>
+      </div>
+    </div>
+    <button class="default-btn btn-block" (click)="renewSubscription('fawry')">
+      {{ "Confirm" | translate }}
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,406 @@
+<div class="custom_modal share_modal" *ngIf="shareType == 'addshareWithGroup'">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ "create_new_post" | translate }}</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="dismissTest(addshare)"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #addShare="ngForm">
+      <div class="form-group">
+        <textarea
+          text-direction-detect
+          [text_el]="shareData.content"
+          name="notes"
+          [(ngModel)]="shareData.content"
+          #content="ngModel"
+          name="content"
+          cols="30"
+          rows="5"
+          placeholder="{{ 'content' | translate }}"
+          class="form-control"
+        ></textarea>
+      </div>
+
+      <div class="toggle_item item">
+        <label
+          ><span class="check_box"></span
+          >{{ "test_scheduling" | translate }}</label
+        >
+
+        <span class="m_switch">
+          <label>
+            <input
+              type="checkbox"
+              id="status{index}}"
+              [(ngModel)]="scheduling"
+              #status="ngModel"
+              name="choicetoggle"
+            />
+            <span> </span>
+          </label>
+        </span>
+      </div>
+
+      <div class="form-group" *ngIf="scheduling">
+        <label for="time"
+          >{{ "test_scheduling" | translate }}
+          <small>{{ "optional" | translate }}</small></label
+        >
+        <input
+          name="time"
+          type="datetime-local"
+          placeholder="{{ 'test_scheduling' | translate }}"
+          class="form-control"
+          [min]="today"
+          [(ngModel)]="scheduled_date"
+        />
+      </div>
+
+      <div class="toggle_item item">
+        <label
+          ><span class="check_box"></span
+          >{{ "duration_test" | translate }}</label
+        >
+
+        <span class="m_switch">
+          <label>
+            <input
+              type="checkbox"
+              id="status{index}}"
+              [(ngModel)]="testTime"
+              #status="ngModel"
+              name="choicetoggle"
+            />
+            <span> </span>
+          </label>
+        </span>
+      </div>
+
+      <div class="form-group" *ngIf="testTime">
+        <label for="duration"
+          >{{ "duration_test_minutes" | translate }}
+          <small>{{ "optional" | translate }}</small></label
+        >
+        <input
+          [(ngModel)]="test_duration"
+          name="duration"
+          type="number"
+          placeholder="{{ 'duration_test_minutes' | translate }}"
+          class="form-control"
+        />
+      </div>
+
+      <div class="toggle_item item">
+        <label
+          ><span class="check_box"></span>{{ "viewResult" | translate }}</label
+        >
+        <span class="m_switch">
+          <label>
+            <input
+              type="checkbox"
+              id="viewResult"
+              [(ngModel)]="viewResult"
+              name="viewResult"
+            />
+            <span> </span>
+          </label>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <button
+          [ngStyle]="{
+            'pointer-events': loaderCreatePost ? 'none' : '',
+            opacity: loaderCreatePost ? ' 0.8' : '1'
+          }"
+          class="default-btn btn-block"
+          (click)="savePost(addShare, addshare, 'groups')"
+          type="submit"
+        >
+          <div *ngIf="loaderCreatePost" class="d-flex justify-content-center">
+            <img src="assets/img/loader2.svg" width="35px" />
+          </div>
+
+          <span class="label">{{ "share" | translate }} </span>
+        </button>
+      </div>
+
+      <div class="input-group form-group search_input">
+        <span class="input-group-text" id="basic-addon1"
+          ><i class="fas fa-search"></i
+        ></span>
+        <input
+          id="search"
+          type="text"
+          class="form-control"
+          (keyup)="onKeyUp(searchKey.value, 'groups')"
+          #searchKey
+          placeholder="{{ 'search_for_group' | translate }}"
+        />
+      </div>
+
+      <div *ngIf="flagSherch" class="d-flex justify-content-center loader_img">
+        <img src="assets/img/loader2.svg" width="70px" />
+        <img class="logo" src="assets/img/loader_logo.webp" />
+      </div>
+      <div *ngIf="searchedGroups.length > 0 && !flagSherchdata">
+        <div
+          class="memper_item"
+          *ngFor="let groupInfo of searchedGroups; let i = index"
+        >
+          <div class="m_img">
+            <img
+              *ngIf="!groupInfo.image"
+              src="assets/img/group.png"
+              alt="{{ groupInfo.name }}"
+            />
+            <img
+              alt="{{ groupInfo.name }}"
+              *ngIf="groupInfo.image"
+              [src]="groupimagePath + groupInfo.image"
+            />
+          </div>
+          <div class="m_info">
+            <h2>{{ groupInfo.name }}</h2>
+          </div>
+          <button
+            *ngIf="groupInfo.flag"
+            (click)="addGroup(groupInfo.id, i)"
+            class="default-btn"
+          >
+            {{ "add" | translate }}
+          </button>
+          <button
+            *ngIf="!groupInfo.flag"
+            (click)="removeFromAdddata(groupInfo.id, i)"
+            class="default-btn"
+          >
+            {{ "delete" | translate }}
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="text-center"
+        *ngIf="flagSherchdata && searchedGroups.length <= 0"
+      >
+        {{ "no_groups_for_this_search" | translate }}
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  class="custom_modal share_modal"
+  *ngIf="shareType == 'addshareWithStudents'"
+>
+  <div class="modal-header">
+    <h4 class="modal-title">{{ "create_new_post" | translate }}</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="dismissTest(addshareWithStudents)"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div
+    class="modal-body"
+    infinite-scroll
+    [infiniteScrollDistance]="4"
+    (scrolled)="onScroll()"
+    [scrollWindow]="false"
+  >
+    <form #addShare="ngForm">
+      <div class="form-group">
+        <textarea
+          text-direction-detect
+          [text_el]="shareData.content"
+          name="notes"
+          [(ngModel)]="shareData.content"
+          #content="ngModel"
+          name="content"
+          cols="30"
+          rows="5"
+          placeholder="{{ 'content' | translate }}"
+          class="form-control"
+        ></textarea>
+      </div>
+
+      <div class="toggle_item item">
+        <label>
+          <span class="check_box"></span>
+          {{ "test_scheduling" | translate }}
+        </label>
+
+        <span class="m_switch">
+          <label>
+            <input
+              type="checkbox"
+              id="status{index}}"
+              [(ngModel)]="scheduling"
+              #status="ngModel"
+              name="choicetoggle"
+            />
+            <span> </span>
+          </label>
+        </span>
+      </div>
+
+      <div class="form-group" *ngIf="scheduling">
+        <label for="time"
+          >{{ "test_scheduling" | translate }}
+          <small>{{ "optional" | translate }}</small></label
+        >
+        <input
+          name="time"
+          type="datetime-local"
+          [(ngModel)]="scheduled_date"
+          [min]="today"
+          placeholder="{{ 'test_scheduling' | translate }}"
+          class="form-control"
+        />
+      </div>
+
+      <div class="toggle_item item">
+        <label
+          ><span class="check_box"></span
+          >{{ "duration_test" | translate }}</label
+        >
+
+        <span class="m_switch">
+          <label>
+            <input
+              type="checkbox"
+              id="status{index}}"
+              [(ngModel)]="testTime"
+              #status="ngModel"
+              name="choicetoggle"
+            />
+            <span> </span>
+          </label>
+        </span>
+      </div>
+
+      <div class="form-group" *ngIf="testTime">
+        <label for="duration"
+          >{{ "duration_test_minutes" | translate }}
+          <small>{{ "optional" | translate }}</small></label
+        >
+        <input
+          [(ngModel)]="test_duration"
+          name="duration"
+          type="number"
+          placeholder="{{ 'duration_test_minutes' | translate }}"
+          class="form-control"
+        />
+      </div>
+
+      <div class="toggle_item item">
+        <label
+          ><span class="check_box"></span>{{ "viewResult" | translate }}</label
+        >
+        <span class="m_switch">
+          <label>
+            <input
+              type="checkbox"
+              id="viewresult"
+              [(ngModel)]="viewResult"
+              name="viewResult"
+            />
+            <span></span>
+          </label>
+        </span>
+      </div>
+
+      <div class="form-group">
+        <button
+          [ngStyle]="{
+            'pointer-events': loaderCreatePost ? 'none' : '',
+            opacity: loaderCreatePost ? ' 0.8' : '1'
+          }"
+          class="default-btn btn-block"
+          (click)="savePost(addShare, addshareWithStudents, 'students')"
+          type="submit"
+        >
+          <div *ngIf="loaderCreatePost" class="d-flex justify-content-center">
+            <img src="assets/img/loader2.svg" width="35px" />
+          </div>
+
+          <span class="label">{{ "share" | translate }} </span>
+        </button>
+      </div>
+
+      <div class="input-group form-group search_input">
+        <span class="input-group-text" id="basic-addon1"
+          ><i class="fas fa-search"></i
+        ></span>
+        <input
+          id="search"
+          type="text"
+          class="form-control"
+          (keyup)="onKeyUp(searchKey.value, 'students')"
+          #searchKey
+          placeholder="{{ 'searching_student' | translate }}"
+        />
+      </div>
+
+      <div *ngIf="flagSherch" class="d-flex justify-content-center loader_img">
+        <img src="assets/img/loader2.svg" width="70px" />
+        <img class="logo" src="assets/img/loader_logo.webp" />
+      </div>
+      <div *ngIf="searchedStudents.length > 0 && !flagSherchdata">
+        <div
+          class="memper_item"
+          *ngFor="let StdInfo of searchedStudents; let i = index"
+        >
+          <div class="m_img">
+            <img
+              *ngIf="!StdInfo.img"
+              src="assets/img/avatar.png"
+              alt="Default User Image"
+            />
+            <img
+              *ngIf="StdInfo.img"
+              [alt]="StdInfo.full_name"
+              [src]="commonServ._ImageUrl + 'users/' + StdInfo.img"
+            />
+          </div>
+          <div class="m_info">
+            <h2>{{ StdInfo.full_name }}</h2>
+            <!-- {{ StdInfo.student_id }} -->
+            <!-- <p>{{ StdInfo.date_added | date: "shortDate" }}</p> -->
+          </div>
+          <button
+            *ngIf="StdInfo.flag"
+            (click)="addStudent(StdInfo.student_id, i)"
+            class="default-btn"
+          >
+            {{ "add" | translate }}
+          </button>
+          <button
+            *ngIf="!StdInfo.flag"
+            (click)="removeFromStudents(StdInfo.student_id, i)"
+            class="default-btn"
+          >
+            {{ "delete" | translate }}
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="text-center"
+        *ngIf="flagSherchdata && searchedGroups.length <= 0"
+      >
+        {{ "no_student_for_this_search" | translate }}
+      </div>
+    </form>
+  </div>
+</div>

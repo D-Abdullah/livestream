@@ -1,0 +1,54 @@
+$number-block-width-height: 35px;
+
+
+.header-block {
+    border-bottom: 1px solid var(--paper-test-main-color);
+    min-height: 35px;
+    font-weight: bold;
+    display: flex;
+    margin-bottom: 10px;
+    p {
+        margin-bottom: 0;
+    }
+    &__number-block {
+        // border: 1px solid red;
+        height: auto;
+        width: 25px;
+        height: 35px;
+        background: var(--paper-test-main-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-inline-end: 10px;
+        span {
+            color: white;
+        }
+    }
+    &__title {
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        
+        width: calc(100% - $number-block-width-height);
+        padding-bottom: 5px;
+        flex-direction: column;
+        span {
+            // color: red;
+            ::ng-deep {
+                .appshow {
+                    // color: var(--paper-test-head-title-color);
+                    p {
+                        display: inline;
+                        color: var(--paper-test-head-title-color);
+                        span {
+                            color: var(--paper-test-head-title-color)!important;
+                        }
+                    }
+                }
+            }
+        }
+        .head-title {
+            display: block;
+        }
+    }
+}

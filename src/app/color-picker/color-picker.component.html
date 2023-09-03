@@ -1,0 +1,93 @@
+<!-- <div #popup class="color-picker-container" [style.visibility] = "visibility" [style.left]="posX" [style.top]="posY"> -->
+    <section class="color-picker-title-section">
+        <span class="name">{{title}}</span>
+    </section>
+    <mat-divider style="border-color:grey"></mat-divider>
+    <section class="color-picker-section"
+    >
+        <mat-button-toggle-group name="color-group" class="color-group" [(value)]="selectedColor" (change)="onColorSelected($event)">
+            <mat-button-toggle value="#333333">
+                <mat-icon style="color:#333333">lens</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="#33a787">
+                <mat-icon style="color:#33a787">lens</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="#0082f5">
+                <mat-icon style="color:#0082f5">lens</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="#e5616d">
+                <mat-icon style="color:#e5616d">lens</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="#a36bb2">
+                <mat-icon style="color:#a36bb2">lens</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="#f2994a">
+                <mat-icon style="color:#f2994a">lens</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle value="#fee133">
+                <mat-icon style="color:#fee133">lens</mat-icon>
+            </mat-button-toggle>
+            <mat-button-toggle
+                #ignoredButton
+                [value] = "customColor"
+                (click)="toggle=!toggle"
+            >
+                <mat-icon svgIcon="color-wheel" style="width:22px"></mat-icon>
+
+            </mat-button-toggle>
+
+        </mat-button-toggle-group>
+        <div 
+        #ignoredInput
+        [cpOKButton]="true"
+        [cpCancelButton]="true"
+        [cpEyeDropper]="true"
+        [(colorPicker)]="customColor"
+        [cpSaveClickOutside]="false"
+        [cpUseRootViewContainer]="false"
+        [(cpToggle)]="toggle"
+        [cpIgnoredElements]="[ignoredButton, ignoredInput]"
+        (colorPickerSelect)="colorPickerSelect()"
+        [cpOutputFormat] = "'hex'"
+        style="width: 100%; height: 0;visibility: hidden;"
+        ></div>   
+        <mat-divider style="color:grey; width:90%; margin-top: 14px;"></mat-divider>
+    </section>
+
+    <section class="width-picker">
+        <mat-button-toggle-group name="width-group" class="width-group" #group="matButtonToggleGroup"
+            [(value)]="selectedWidth" (change)="onWidthSelected($event)">
+            <mat-button-toggle class="width-button" value=1>
+                <svg width="23" height="23">
+                    <rect x="1" y="11" width="21" height="1" stroke="grey" fill="grey" rx="1" ry="2"
+                        transform="rotate(-45, 12, 12)" />
+                </svg>
+            </mat-button-toggle>
+            <mat-button-toggle class="width-button" value=3>
+                <svg width="23" height="23">
+                    <rect x="1" y="10" width="21" height="3" stroke="grey" fill="grey" rx="2" ry="3"
+                        transform="rotate(-45, 12, 12)" />
+                </svg>
+            </mat-button-toggle>
+            <mat-button-toggle class="width-button" value=7>
+                <svg width="23" height="23">
+                    <rect x="1" y="9" width="21" height="7" stroke="grey" fill="grey" rx="3" ry="7"
+                        transform="rotate(-45, 12, 12)" />
+                </svg>
+            </mat-button-toggle>
+            <mat-button-toggle class="width-button" value=9>
+                <svg width="23" height="23">
+                    <rect x="1" y="6" width="21" height="9" stroke="grey" fill="grey" rx="5" ry="9"
+                        transform="rotate(-45, 12, 12)" />
+                </svg>
+            </mat-button-toggle>
+            <mat-button-toggle class="width-button" value=13>
+                <svg width="23" height="23">
+                    <rect x="1" y="5" width="21" height="13" stroke="grey" fill="grey" rx="6" ry="13"
+                        transform="rotate(-45, 12, 12)" />
+                </svg>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </section>
+    <div class="indicator"></div>
+<!-- </div> -->
